@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dog">
         <activity
-            android:name="com.gaelaelrasi.dogbreeds.activities.MainActivity"
+            android:name="com.gaelaelrasi.dogbreeds.ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

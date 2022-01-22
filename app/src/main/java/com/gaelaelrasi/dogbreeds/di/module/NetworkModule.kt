@@ -15,8 +15,8 @@ const val API_KEY = "6cadd723-60ce-4d06-82c1-5c81ddb3f873"
 @Module
 class NetworkModule {
 
-    @Singleton
     @Provides
+    @Singleton
     fun getRetroFitInstance(): Retrofit {
 
         val httpClient = OkHttpClient.Builder().addInterceptor { chain ->
@@ -35,7 +35,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun  getBreedsService(): BreedsApi{
+    fun getBreedsService(): BreedsApi{
         return getRetroFitInstance().create(BreedsApi::class.java)
     }
 }

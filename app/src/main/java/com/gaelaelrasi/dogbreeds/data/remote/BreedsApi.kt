@@ -1,7 +1,7 @@
 package com.gaelaelrasi.dogbreeds.data.remote
 
 import com.gaelaelrasi.dogbreeds.data.model.Breed
-import dagger.Provides
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Call
 import retrofit2.Response
@@ -13,12 +13,13 @@ interface BreedsApi {
 
     @GET("breeds")
     fun getBreeds(
-        @Header("api_key") api_key: Int
-    ): Call<List<Breed>>
+        @Query("limit") limit: Int,
+        @Query("page") page: Int
+    ): Observable<List<Breed>>
 
     @GET("breeds/search")
     fun getBreedsByName(
         @Header("api_key") api_key: Int,
-        @Query("q") name_breed: String
-    ): Single<Response<Breed>>
+        @Query("q") breed_name: String
+    ): Single<Breed>
 }

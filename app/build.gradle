@@ -49,6 +49,7 @@ dependencies {
 
     //ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.0"
 
     //DI
     implementation 'com.google.dagger:dagger:2.40.5'
@@ -78,4 +79,7 @@ dependencies {
 
     //Lottie
     implementation 'com.airbnb.android:lottie:3.7.0'
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
