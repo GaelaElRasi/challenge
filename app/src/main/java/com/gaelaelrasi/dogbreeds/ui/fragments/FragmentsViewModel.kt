@@ -3,6 +3,7 @@ package com.gaelaelrasi.dogbreeds.ui.fragments
 import androidx.lifecycle.ViewModel
 import com.gaelaelrasi.dogbreeds.R
 import com.gaelaelrasi.dogbreeds.data.model.Breed
+import com.gaelaelrasi.dogbreeds.data.model.Image
 import com.gaelaelrasi.dogbreeds.data.service.BreedService
 import com.gaelaelrasi.dogbreeds.di.module.NetworkModule
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -22,10 +23,15 @@ class FragmentsViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun getBreedsByName(breed_name: String): Single<Breed>{
+    fun getBreedsByName(breed_name: String): Observable<List<Breed>>{
         return breedService.getBreedsService().getBreedsByName(R.string.api_key, breed_name)
             .subscribeOn((Schedulers.io()))
             .observeOn(AndroidSchedulers.mainThread())
     }
 
+    fun getBreedsImageById(image_id: String): Observable<List<Image>>{
+        return breedService.getBreedsService().getBreedsImageById(R.string.api_key, image_id)
+            .subscribeOn((Schedulers.io()))
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

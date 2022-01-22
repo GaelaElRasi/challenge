@@ -34,6 +34,5 @@ data class Breed(
     var referenceImageId: String? = null,
 
     @SerializedName("image")
-    var image: Image = Image()
-
+    var image: Image = Image(),
 )

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Dog Breeds</string>
-    <string name="api_key">6cadd723-60ce-4d06-82c1-5c81ddb3f873</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_without_information">Without Information</string>
+    <string name="network_error">Internet not available, please connect and try again.</string>
+    <string name="unknown_error">Some went wrong, please try again.</string>
+    <string name="server_error">Server error, please try again.</string>
 </resources>
