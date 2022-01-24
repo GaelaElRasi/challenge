@@ -1,13 +1,15 @@
 package com.gaelaelrasi.dogbreeds.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.gaelaelrasi.dogbreeds.R
 import com.gaelaelrasi.dogbreeds.databinding.FragmentSearchBinding
 import com.gaelaelrasi.dogbreeds.di.module.NetworkModule
 import com.gaelaelrasi.dogbreeds.ui.adapter.SearchFragmentRecyclerViewAdapter
@@ -16,7 +18,7 @@ import com.gaelaelrasi.dogbreeds.util.MainViewModelFactory
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
-class SearchFragment : Fragment() {
+class SearchFragment : AppCompatDialogFragment() {
 
     @Inject
     lateinit var defaultErrorHandler: DefaultErrorHandler
@@ -45,9 +47,7 @@ class SearchFragment : Fragment() {
         setUpRecyclerView()
         compositeDisposable.add(
             viewModel.getBreedsByName(breedNameInput)
-                .doOnError {
-                    defaultErrorHandler.getMessage(it)
-                }
+                .doOnError { showAlertDialog(defaultErrorHandler.getMessage(it)) }
                 .map {
                     searchAdapter!!.addAllItems(it)
                     binding.recyclerViewSearchFragment.adapter!!.notifyDataSetChanged()
@@ -102,5 +102,15 @@ class SearchFragment : Fragment() {
             adapter = searchAdapter
             layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
         }
+    }
+
+    private fun showAlertDialog(message: String) {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.unknown_error))
+            .setMessage(message)
+            .setPositiveButton(R.string.unknown_error) { dialog, which ->
+                dismiss()
+            }
+            .show()
     }
 }

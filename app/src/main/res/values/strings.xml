@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Dog Breeds</string>
 
+    <string name="ok_button">OK</string>
+
     <!--Errors-->
     <string name="error_without_information">Without Information</string>
     <string name="network_error">Internet not available, please connect and try again.</string>

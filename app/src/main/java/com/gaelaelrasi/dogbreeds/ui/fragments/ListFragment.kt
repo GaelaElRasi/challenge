@@ -1,8 +1,8 @@
 package com.gaelaelrasi.dogbreeds.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gaelaelrasi.dogbreeds.data.model.Breed
 import com.gaelaelrasi.dogbreeds.databinding.FragmentListBinding
 import com.gaelaelrasi.dogbreeds.di.module.NetworkModule
 import com.gaelaelrasi.dogbreeds.ui.adapter.ListFragmentRecyclerViewAdapter
@@ -19,8 +18,10 @@ import com.gaelaelrasi.dogbreeds.util.MainViewModelFactory
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.processors.PublishProcessor
 import javax.inject.Inject
+import androidx.appcompat.app.AppCompatDialogFragment
+import com.gaelaelrasi.dogbreeds.R
 
-class ListFragment : Fragment() {
+class ListFragment : AppCompatDialogFragment() {
 
     @Inject
     lateinit var defaultErrorHandler: DefaultErrorHandler
@@ -29,13 +30,12 @@ class ListFragment : Fragment() {
     private lateinit var binding: FragmentListBinding
     private var listAdapter: ListFragmentRecyclerViewAdapter? = null
 
-    private var mPublishProcessor: PublishProcessor<Int?>? = null
+    private var mPublishProcessor: PublishProcessor<Int?> = PublishProcessor.create()
     private var pageNumber = 0
     private val VISIBLE_THRESHOLD = 1
     private var lastVisibleItem: Int? = null
     private var totalItemCount: Int? = null
     private var loading = false
-    var dataList : List<Breed> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,10 +43,10 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
-        mPublishProcessor = PublishProcessor.create()
 
         setUpRecyclerView()
         getBreedsList(instanceViewModel())
+        setUpLoadMoreListener()
 
         return binding.root
     }
@@ -59,12 +59,8 @@ class ListFragment : Fragment() {
     private fun getBreedsList(viewModel: FragmentsViewModel) {
         compositeDisposable.add(
             viewModel.getBreeds(pageNumber)
-                .doOnNext {
-
-                }
-                .doOnError {
-                    defaultErrorHandler.getMessage(it)
-                }
+                .doOnNext {}
+                .doOnError { showAlertDialog(defaultErrorHandler.getMessage(it)) }
                 .map {
                     listAdapter!!.addAllItems(it)
                     binding.listFragmentRecyclerView.adapter!!.notifyDataSetChanged()
@@ -78,8 +74,8 @@ class ListFragment : Fragment() {
                     }
                 )
         )
+        mPublishProcessor.onNext(pageNumber)
     }
-
 
     private fun setUpRecyclerView() {
         binding.listFragmentRecyclerView.apply {
@@ -102,11 +98,21 @@ class ListFragment : Fragment() {
                     && totalItemCount!! <= lastVisibleItem!! + VISIBLE_THRESHOLD
                 ) {
                     pageNumber++
-                    mPublishProcessor!!.onNext(pageNumber)
+                    mPublishProcessor.onNext(pageNumber)
                     loading = true
                 }
             }
         })
-        mPublishProcessor!!.onNext(pageNumber)
+        mPublishProcessor.onNext(pageNumber)
+    }
+
+    private fun showAlertDialog(message: String) {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.unknown_error))
+            .setMessage(message)
+            .setPositiveButton(R.string.ok_button) { _, _ ->
+                dismiss()
+            }
+            .show()
     }
 }
