@@ -15,11 +15,10 @@ import com.gaelaelrasi.dogbreeds.ui.activities.DetailActivity
 import com.gaelaelrasi.dogbreeds.util.Constants
 import com.squareup.picasso.Picasso
 
-class FragmentsRecyclerViewAdapter(
-    private val resultRequest: List<Breed>
-): RecyclerView.Adapter<FragmentsRecyclerViewAdapter.ViewHolder>() {
+class ListFragmentRecyclerViewAdapter : RecyclerView.Adapter<ListFragmentRecyclerViewAdapter.ViewHolder>() {
 
     private lateinit var context: Context
+    private val resultRequest: MutableList<Breed> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
@@ -28,7 +27,21 @@ class FragmentsRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return resultRequest.size
+        return if (resultRequest.isEmpty()) {
+            0
+        } else resultRequest.size
+    }
+
+    private fun add(result: Breed) {
+        resultRequest.add(result)
+        notifyItemInserted(resultRequest.size - 1)
+    }
+
+    //Function called on ListFragment to add all items on the recycler view
+    fun addAllItems(breedResults: List<Breed>) {
+        for (result in breedResults) {
+            add(result)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -41,9 +54,6 @@ class FragmentsRecyclerViewAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var breedName: TextView = itemView.findViewById(R.id.card_info_breed_name)
-        var breedGroup: TextView = itemView.findViewById(R.id.card_info_breed_group)
-        var breedOrigin: TextView = itemView.findViewById(R.id.card_info_breed_origin)
-        var breedTemperament: TextView = itemView.findViewById(R.id.card_info_breed_temperament)
         var breedImage: ImageView = itemView.findViewById(R.id.card_info_image_view)
         var breedLayout: ConstraintLayout = itemView.findViewById(R.id.card_information_layout)
     }
@@ -54,5 +64,11 @@ class FragmentsRecyclerViewAdapter(
         intent.putExtra(Constants.EXTRA_BREED_ORIGIN, breedResult.origin )
         intent.putExtra(Constants.EXTRA_BREED_TEMPERAMENT, breedResult.temperament )
         context.startActivity(intent)
+    }
+
+    fun getLastVisibleItemId(): Int? {
+        return if (resultRequest.isEmpty()) {
+            0
+        } else resultRequest[resultRequest.size - 1].id
     }
 }

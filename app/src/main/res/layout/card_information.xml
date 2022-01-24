@@ -13,15 +13,13 @@
         android:layout_height="100dp"
         tools:srcCompat="@tools:sample/avatars"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/card_info_breed_name"/>
 
     <TextView
         android:id="@+id/card_info_breed_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Breed Name"
-        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/DogBreeds.Text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/card_info_image_view"/>
 
@@ -29,8 +27,9 @@
         android:id="@+id/card_info_breed_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/DogBreeds.Text"
         android:layout_marginTop="4dp"
-        android:text="Breed Group"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/card_info_breed_name"
         app:layout_constraintEnd_toEndOf="@id/card_info_breed_name"
         app:layout_constraintTop_toBottomOf="@id/card_info_breed_name"
@@ -40,8 +39,9 @@
         android:id="@+id/card_info_breed_origin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/DogBreeds.Text"
         android:layout_marginTop="4dp"
-        android:text="Breed Origin"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/card_info_breed_group"
         app:layout_constraintEnd_toEndOf="@id/card_info_breed_group"
         app:layout_constraintTop_toBottomOf="@id/card_info_breed_group"/>
@@ -50,11 +50,11 @@
         android:id="@+id/card_info_breed_temperament"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/DogBreeds.Text"
         android:layout_marginTop="4dp"
-        android:text="Breed Temperament"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@id/card_info_breed_origin"
-        app:layout_constraintEnd_toEndOf="@id/card_info_breed_origin"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_info_breed_origin"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

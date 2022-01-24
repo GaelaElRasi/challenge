@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     android:layout_marginTop="16dp"
     android:background="@color/white">
 
@@ -17,11 +17,12 @@
 
   <TextView
       android:id="@+id/detail_card_information_text"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_marginStart="16dp"
       android:layout_marginTop="10dp"
-      android:text="HHHHHHHHHHHHHH"
+      android:layout_marginEnd="4dp"
+      android:textAlignment="center"
       app:layout_constraintStart_toEndOf="@+id/detail_card_information_icon"
       app:layout_constraintTop_toTopOf="@+id/detail_card_information_icon"
       app:layout_constraintBottom_toTopOf="@+id/guideline2"/>

@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gaelaelrasi.dogbreeds.R
@@ -30,7 +29,7 @@ class DetailRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder){
-            if(detailBreedResult[position].isEmpty()){
+            if(detailBreedResult[position].isEmpty() || detailBreedResult[position] == "null" ){
                 textDetail.text = context.getString(R.string.error_without_information)
             }else{
                 textDetail.text = detailBreedResult[position]

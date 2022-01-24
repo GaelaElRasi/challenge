@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">Dog Breeds</string>
+
+    <!--Errors-->
     <string name="error_without_information">Without Information</string>
     <string name="network_error">Internet not available, please connect and try again.</string>
     <string name="unknown_error">Some went wrong, please try again.</string>
     <string name="server_error">Server error, please try again.</string>
+
+    <!--Bottom Navigation-->
+    <string name="bottom_navigation_list">List</string>
+    <string name="bottom_navigation_search">Search</string>
 </resources>
