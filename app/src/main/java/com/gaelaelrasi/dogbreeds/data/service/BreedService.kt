@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Observable
 interface BreedService {
 
     //Return all dog breeds
-    fun getBreeds(): Observable<List<Breed>>
+    fun getBreeds(pageNumber: Int): Observable<List<Breed>>
 
     //Return all dog breeds matching the breed name passed
     fun getBreedsByName(breed_name: String): Observable<List<Breed>>

@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class BreedsServiceImpl @Inject constructor(private val breedsApi: BreedsApi): BreedService {
 
-    override fun getBreeds(): Observable<List<Breed>> {
-        return breedsApi.getBreeds(30,0)
+    override fun getBreeds(pageNumber: Int): Observable<List<Breed>> {
+        return breedsApi.getBreeds(51,pageNumber)
     }
 
     override fun getBreedsByName(breed_name: String):  Observable<List<Breed>> {

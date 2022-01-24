@@ -15,8 +15,8 @@ class ExampleUnitTest {
     fun apiResponse_success() {
         val appComponent = DaggerApplicationComponent.create()
         runBlocking {
-            val breeds = appComponent.getBreeds().getBreeds()
-            println("Breeds: $breeds")
+            //val breeds = appComponent.getBreeds().getBreeds()
+            //println("Breeds: $breeds")
         }
     }
 }

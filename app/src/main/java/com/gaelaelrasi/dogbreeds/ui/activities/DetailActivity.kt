@@ -12,6 +12,7 @@ class DetailActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private val detailBreedList: MutableList<String> = mutableListOf()
+    private var detailAdapter: DetailRecyclerViewAdapter = DetailRecyclerViewAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,12 +36,13 @@ class DetailActivity: AppCompatActivity() {
 
     private fun initView() {
         setUpRecycler()
+        detailAdapter.addAllItems(detailBreedList)
     }
 
     private fun setUpRecycler() {
         binding.detailBreedList.apply {
-            adapter = DetailRecyclerViewAdapter(detailBreedList)
-            adapter = adapter
+            detailAdapter = DetailRecyclerViewAdapter()
+            adapter = detailAdapter
             layoutManager = LinearLayoutManager(
                 this@DetailActivity,
                 RecyclerView.VERTICAL,

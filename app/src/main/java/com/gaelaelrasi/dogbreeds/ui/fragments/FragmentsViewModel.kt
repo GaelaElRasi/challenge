@@ -14,9 +14,8 @@ class FragmentsViewModel @Inject constructor(
     private val breedService: NetworkModule
     ): ViewModel() {
 
-    /*Este comanda*/
-    fun getBreeds(page: Int): Observable<List<Breed>> {
-        return breedService.getBreedsService().getBreeds(30,page)
+    fun getBreeds(pageNumber: Int): Observable<List<Breed>> {
+        return breedService.getBreedsService().getBreeds(51, pageNumber)
             .subscribeOn((Schedulers.io()))
             .observeOn(AndroidSchedulers.mainThread())
     }

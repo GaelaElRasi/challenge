@@ -8,11 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gaelaelrasi.dogbreeds.R
 
-class DetailRecyclerViewAdapter(
-    private val detailBreedResult: List<String>
-): RecyclerView.Adapter<DetailRecyclerViewAdapter.ViewHolder>() {
+class DetailRecyclerViewAdapter: RecyclerView.Adapter<DetailRecyclerViewAdapter.ViewHolder>() {
 
     private lateinit var context: Context
+    private val detailBreedResult: MutableList<String> = mutableListOf()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -24,7 +23,21 @@ class DetailRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return detailBreedResult.size
+        return if (detailBreedResult.isEmpty()) {
+            0
+        } else detailBreedResult.size
+    }
+
+    private fun add(result: String) {
+        detailBreedResult.add(result)
+        notifyItemRangeInserted(itemCount,detailBreedResult.size - 1)
+    }
+
+    //Function called on DetailActivity to add all items on the recycler view
+    fun addAllItems(detailResults: List<String>) {
+        for (result in detailResults) {
+            add(result)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

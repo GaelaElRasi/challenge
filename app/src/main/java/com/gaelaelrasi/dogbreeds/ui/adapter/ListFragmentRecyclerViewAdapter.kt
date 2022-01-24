@@ -34,7 +34,7 @@ class ListFragmentRecyclerViewAdapter : RecyclerView.Adapter<ListFragmentRecycle
 
     private fun add(result: Breed) {
         resultRequest.add(result)
-        notifyItemInserted(resultRequest.size - 1)
+        notifyItemRangeInserted(itemCount,resultRequest.size - 1)
     }
 
     //Function called on ListFragment to add all items on the recycler view
@@ -64,11 +64,5 @@ class ListFragmentRecyclerViewAdapter : RecyclerView.Adapter<ListFragmentRecycle
         intent.putExtra(Constants.EXTRA_BREED_ORIGIN, breedResult.origin )
         intent.putExtra(Constants.EXTRA_BREED_TEMPERAMENT, breedResult.temperament )
         context.startActivity(intent)
-    }
-
-    fun getLastVisibleItemId(): Int? {
-        return if (resultRequest.isEmpty()) {
-            0
-        } else resultRequest[resultRequest.size - 1].id
     }
 }

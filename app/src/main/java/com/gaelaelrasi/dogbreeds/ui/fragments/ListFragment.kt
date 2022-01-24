@@ -2,7 +2,6 @@ package com.gaelaelrasi.dogbreeds.ui.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,7 @@ class ListFragment : AppCompatDialogFragment() {
 
     private val compositeDisposable = CompositeDisposable()
     private lateinit var binding: FragmentListBinding
-    private var listAdapter: ListFragmentRecyclerViewAdapter? = null
+    private var listAdapter: ListFragmentRecyclerViewAdapter = ListFragmentRecyclerViewAdapter()
 
     private var mPublishProcessor: PublishProcessor<Int?> = PublishProcessor.create()
     private var pageNumber = 0
@@ -44,11 +43,16 @@ class ListFragment : AppCompatDialogFragment() {
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
 
-        setUpRecyclerView()
-        getBreedsList(instanceViewModel())
-        setUpLoadMoreListener()
+        initView()
 
         return binding.root
+    }
+
+    private fun initView() {
+        setUpRecyclerView()
+        getBreedsList(instanceViewModel())
+
+        setUpLoadMoreListener()
     }
 
     private fun instanceViewModel(): FragmentsViewModel {
@@ -62,17 +66,10 @@ class ListFragment : AppCompatDialogFragment() {
                 .doOnNext {}
                 .doOnError { showAlertDialog(defaultErrorHandler.getMessage(it)) }
                 .map {
-                    listAdapter!!.addAllItems(it)
+                    listAdapter.addAllItems(it)
                     binding.listFragmentRecyclerView.adapter!!.notifyDataSetChanged()
                 }
-                .subscribe(
-                    { breedList ->
-
-                    },
-                    { throwable ->
-                        Log.e("ListFragment", throwable.message ?: "onError")
-                    }
-                )
+                .subscribe()
         )
         mPublishProcessor.onNext(pageNumber)
     }

@@ -33,9 +33,13 @@ class SearchFragment : AppCompatDialogFragment() {
     ): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
 
-        setUpSearchView()
+        initView()
 
         return binding.root
+    }
+
+    private fun initView() {
+        setUpSearchView()
     }
 
     private fun instanceViewModel(): FragmentsViewModel {
@@ -44,34 +48,27 @@ class SearchFragment : AppCompatDialogFragment() {
     }
 
     private fun getBreedByName(viewModel: FragmentsViewModel, breedNameInput: String) {
-        setUpRecyclerView()
         compositeDisposable.add(
             viewModel.getBreedsByName(breedNameInput)
                 .doOnError { showAlertDialog(defaultErrorHandler.getMessage(it)) }
                 .map {
                     searchAdapter!!.addAllItems(it)
+
                     binding.recyclerViewSearchFragment.adapter!!.notifyDataSetChanged()
                 }
                 .subscribe()
         )
+        setUpRecyclerView()
     }
 
-    private fun getImageBreedsById(viewModel: FragmentsViewModel, breedList: Unit) {
-       /* compositeDisposable.add(
-            viewModel.getBreedsImageById(breedList)
+    private fun getImageBreedsById(viewModel: FragmentsViewModel, image_id: String) {
+        compositeDisposable.add(
+            viewModel.getBreedsImageById(image_id)
                 .doAfterTerminate{  }
-                .doOnError {
-                    defaultErrorHandler.getMessage(it)
-                }
-                .subscribe(
-                    { breedList ->
-                        setUpRecyclerView(breedList)
-                    },
-                    { throwable ->
-                        Log.e("ListFragment", throwable.message ?: "onError")
-                    }
-                )
-        )*/
+                .doOnError { showAlertDialog(defaultErrorHandler.getMessage(it)) }
+                .map {}
+                .subscribe()
+        )
     }
 
     private fun setUpSearchView() {
@@ -108,7 +105,7 @@ class SearchFragment : AppCompatDialogFragment() {
         AlertDialog.Builder(context)
             .setTitle(getString(R.string.unknown_error))
             .setMessage(message)
-            .setPositiveButton(R.string.unknown_error) { dialog, which ->
+            .setPositiveButton(R.string.unknown_error) { _, _ ->
                 dismiss()
             }
             .show()
